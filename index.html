@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mi primera escena VR - Cancha de Voleibol</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Sistema de físicas para A-Frame -->
+    <script src="https://cdn.jsdelivr.net/npm/cannon@0.20.0/build/cannon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@2.1.0/dist/aframe-physics-system.js"></script>
+  </head>
+  <body>
+    <a-scene physics="gravity: -9.8">
+
+      <!-- ========== CIELO (ELEMENTO EXISTENTE) ========== -->
+      <a-sky color="#ECECEC"></a-sky>
+
+      <!-- ========== ELEMENTOS PREVIOS (SIN MODIFICAR) ========== -->
+      <a-box position="0 1 -3" color="#4CC3D9"></a-box>
+      <a-plane rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+
+      <!-- ========== CANCHA DE VOLEIBOL ========== -->
+      <!-- Suelo de la cancha: rectángulo de arena/madera -->
+      <a-plane
+        id="volleyball-court"
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="18"
+        height="9"
+        color="#D4A574"
+        material="side: double"
+        physics="type: static; shape: plane">
+      </a-plane>
+
+      <!-- ========== RED DE VOLEIBOL ========== -->
+      <!-- Marco superior izquierdo de la red -->
+      <a-box
+        id="net-post-left"
+        position="-9 2.43 0"
+        scale="0.2 3 0.2"
+        color="#333333"
+        physics="type: static">
+      </a-box>
+
+      <!-- Marco superior derecho de la red -->
+      <a-box
+        id="net-post-right"
+        position="9 2.43 0"
+        scale="0.2 3 0.2"
+        color="#333333"
+        physics="type: static">
+      </a-box>
+
+      <!-- Cinta superior de la red -->
+      <a-box
+        id="net-top"
+        position="0 2.43 0"
+        scale="18 0.15 0.1"
+        color="#FFFFFF"
+        physics="type: static">
+      </a-box>
+
+      <!-- Malla de la red (representada como cilindros verticales para simular la red) -->
+      <a-box
+        id="net-mesh"
+        position="0 1.2 0"
+        scale="18 2.4 0.05"
+        color="#CCCCCC"
+        material="opacity: 0.6; side: double"
+        physics="type: static">
+      </a-box>
+
+      <!-- Línea central de la red (visual) -->
+      <a-box
+        id="net-center-line"
+        position="0 0.5 0"
+        scale="18 0.05 0.1"
+        color="#FFFFFF"
+        physics="type: static">
+      </a-box>
+
+      <!-- ========== BALÓN DE VOLEIBOL ========== -->
+      <a-sphere
+        id="volleyball"
+        position="0 2 -2"
+        radius="0.33"
+        color="#FFFFFF"
+        segments-height="32"
+        segments-width="32"
+        physics="type: dynamic; mass: 0.27; shape: sphere; linearDamping: 0.5; angularDamping: 0.5"
+        material="color: #FFFFFF; emissive: #CCCCCC">
+        <!-- Patrón del balón de voleibol (franjas) -->
+        <a-box
+          position="0 0.33 0"
+          scale="0.66 0.08 0.66"
+          color="#4472C4"
+          rotation="0 0 0">
+        </a-box>
+        <a-box
+          position="0 -0.33 0"
+          scale="0.66 0.08 0.66"
+          color="#4472C4"
+          rotation="0 0 0">
+        </a-box>
+      </a-sphere>
+
+      <!-- ========== SCRIPT PARA INTERACTIVIDAD DEL BALÓN ========== -->
+      <script>
+        // Selector del balón
+        const volleyball = document.getElementById('volleyball');
+
+        // Evento de click en el balón para que rebote
+        volleyball.addEventListener('click', function() {
+          // Aplicar impulso hacia arriba al balón
+          const rigidBody = volleyball.body;
+          if (rigidBody) {
+            // Velocidad inicial del rebote (hacia arriba)
+            rigidBody.velocity.y = 8; // Metros por segundo hacia arriba
+
+            // Agregar rotación al balón para hacerlo más realista
+            rigidBody.angularVelocity.x = (Math.random() - 0.5) * 2;
+            rigidBody.angularVelocity.z = (Math.random() - 0.5) * 2;
+          }
+        });
+
+        // Evento para reiniciar la posición del balón si se sale de los límites
+        document.addEventListener('tick', function() {
+          const ballPos = volleyball.getAttribute('position');
+
+          // Si el balón cae muy bajo, reiniciarlo a posición inicial
+          if (ballPos.y < -5) {
+            volleyball.setAttribute('position', { x: 0, y: 2, z: -2 });
+            volleyball.body.velocity.set(0, 0, 0);
+            volleyball.body.angularVelocity.set(0, 0, 0);
+          }
+
+          // Limitar el movimiento lateral del balón dentro de la cancha
+          if (Math.abs(ballPos.x) > 9) {
+            volleyball.body.velocity.x *= -0.8; // Rebotar en los lados
+          }
+          if (Math.abs(ballPos.z) > 4.5) {
+            volleyball.body.velocity.z *= -0.8; // Rebotar en los extremos
+          }
+        });
+      </script>
+
+    </a-scene>
+  </body>
+</html>
