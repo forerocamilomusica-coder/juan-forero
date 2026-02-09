@@ -5,6 +5,8 @@
   <title>AR Business Card - Juan Camilo Forero</title>
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script
+    src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -14,6 +16,8 @@
       <img id="textura-caja" src="https://i.imgur.com/mYmmbrp.jpg">
       <a-asset-item id="cat-obj" src="12221_Cat_v1_l3.obj"></a-asset-item>
       <a-asset-item id="cat-mtl" src="12221_Cat_v1_l3.mtl"></a-asset-item>
+      <a-asset-item id="optimerBold"
+        src="https://rawgit.com/mrdoob/three.js/master/examples/fonts/optimer_bold.typeface.json"></a-asset-item>
     </a-assets>
 
     <a-marker preset="hiro">
@@ -24,14 +28,15 @@
       <a-entity obj-model="obj: #cat-obj; mtl: #cat-mtl" position="-1 0 0.5" rotation="-90 0 0" scale="0.05 0.05 0.05">
       </a-entity>
 
-      <!-- Text Info -->
-      <a-text value="Juan Camilo Forero" position="0.5 0 -0.5" rotation="-90 0 0" align="center" color="white"
-        font="custom-font.json" font-image="custom-font.png" scale="1.2 1.2 1.2">
-      </a-text>
+      <!-- 3D Text Info -->
+      <a-entity
+        text-geometry="value: Juan Camilo Forero; font: #optimerBold; size: 0.5; height: 0.1; bevelEnabled: true; bevelSize: 0.01; bevelThickness: 0.01;"
+        material="color: white;" position="-1.5 0 -0.5" rotation="-90 0 0">
+      </a-entity>
 
-      <a-text value="Diseñador Industrial" position="0.5 0 0.2" rotation="-90 0 0" align="center" color="#ccc"
-        font="custom-font.json" font-image="custom-font.png" scale="0.8 0.8 0.8">
-      </a-text>
+      <a-entity text-geometry="value: Diseñador Industrial; font: #optimerBold; size: 0.3; height: 0.05;"
+        material="color: #ccc;" position="-1.2 0 0.2" rotation="-90 0 0">
+      </a-entity>
 
     </a-marker>
 
