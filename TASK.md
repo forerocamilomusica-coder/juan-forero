@@ -1,0 +1,23 @@
+# AR Business Card Tasks
+
+- [x] Initialize project structure
+    - [x] Create `index.html` with base code
+    - [ ] Verify local environment
+- [x] Enhance Business Card Design <!-- id: 3 -->
+    - [x] Update markers/assets <!-- id: 4 -->
+    - [x] Add contact information (Text/Images) <!-- id: 5 -->
+    - [x] Add interactive elements (optional) <!-- id: 6 -->
+- [ ] Verification <!-- id: 7 -->
+    - [ ] Test with `hiro` marker <!-- id: 8 -->
+- [x] Deploy to GitHub <!-- id: 9 -->
+    - [x] Initialize/Update Git <!-- id: 10 -->
+    - [x] Create GitHub Repository (User Action) <!-- id: 11 -->
+    - [x] Push to GitHub <!-- id: 12 -->
+    - [x] Enable GitHub Pages (User Action) <!-- id: 13 -->
+- [x] Custom Font Implementation <!-- id: 14 -->
+    - [x] Convert .ttf to MSDF <!-- id: 15 -->
+    - [x] Configure A-Frame <!-- id: 16 -->
+    - [x] Push Font Assets to GitHub <!-- id: 17 -->
+- [x] Implement 3D Text <!-- id: 18 -->
+    - [x] Add text-geometry component <!-- id: 19 -->
+    - [x] Update entity definitions <!-- id: 20 -->
